@@ -1,38 +1,24 @@
-import io.restassured.RestAssured;
+package admintest;
+
 import io.restassured.http.ContentType;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import util.BaseTest;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-public class AdminLoginTest {
-    private String adminUsername="admin";
-    private String adminPassword="admin";
+public class AdminLoginTest extends BaseTest {
 
-    private String userNotFound="admin123";
-    private String invalidPassword="admin@123";
-    private String usernameNull="";
-    private String passwordNull="";
-    private String adminEndpoint="/api/admin/login";
-
-
-    @BeforeClass
-    public static void setup() {
-        // Base URI
-        RestAssured.baseURI = "http://localhost:9000"; // Update with your actual base URL
-    }
     @Test
     public void testLoginSuccess() {
-        // Request payload
-        String requestBody = "{ \"username\": \""+adminUsername+"\", \"password\": \""+adminPassword+"\" }";
+        String requestBody = "{ \"username\": \"" + adminUsername + "\", \"password\": \"" + adminPassword + "\" }";
 
         given()
                 .contentType(ContentType.JSON)
-                .body(requestBody)// Logs request details
+                .body(requestBody)
                 .when()
                 .post(adminEndpoint)
-                .then()// Logs response details
+                .then()
                 .statusCode(200)
                 .log().ifError()
                 .body("status", equalTo("success"))
