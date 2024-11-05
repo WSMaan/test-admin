@@ -34,6 +34,7 @@ public class AdminLoginTest {
                 .post(adminEndpoint)
                 .then()// Logs response details
                 .statusCode(200)
+                .log().ifError()
                 .body("status", equalTo("success"))
                 .body("message", equalTo("Admin Logged in Successfully!"));
     }
@@ -49,6 +50,7 @@ public class AdminLoginTest {
                 .post(adminEndpoint)
                 .then()
                 .statusCode(404)
+                .log().ifError()
                 .body("error", equalTo("User not found"));
     }
     @Test
@@ -63,6 +65,7 @@ public class AdminLoginTest {
                 .post(adminEndpoint)
                 .then()
                 .statusCode(400)
+                .log().ifError()
                 .body("error", equalTo("Incorrect password"));
     }
     @Test
@@ -77,6 +80,7 @@ public class AdminLoginTest {
                 .post(adminEndpoint)
                 .then()
                 .statusCode(400)
+                .log().ifError()
                 .body("message", equalTo("Validation failed"));
     }
     @Test
@@ -91,6 +95,7 @@ public class AdminLoginTest {
                 .post(adminEndpoint)
                 .then()
                 .statusCode(400)
+                .log().ifError()
                 .body("message", equalTo("Validation failed"));
     }
     @Test
@@ -105,6 +110,7 @@ public class AdminLoginTest {
                 .post("/api/admin/logi")
                 .then()
                 .statusCode(500)
+                .log().ifError()
                 .body("error", equalTo("No static resource api/admin/logi."));
     }
     @Test
@@ -119,6 +125,7 @@ public class AdminLoginTest {
                 .post(adminEndpoint)
                 .then()
                 .statusCode(401)
+                .log().ifError()
                 .body("error", equalTo("Invalid credentials or not authorized as admin"));
     }
 }
