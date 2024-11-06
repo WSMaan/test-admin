@@ -10,22 +10,6 @@ import static org.hamcrest.Matchers.equalTo;
 public class AdminLoginTest extends BaseTest {
 
     @Test
-    public void testUsernameNotFound() {
-        // Request payload
-        String requestBody = "{ \"username\": \""+userNotFound+"\", \"password\": \""+adminPassword+"\" }";
-
-        given()
-                .contentType(ContentType.JSON)
-                .body(requestBody)
-                .when()
-                .post(adminEndpoint)
-                .then()
-                .statusCode(404)
-                .log().ifError()
-                .body("error", equalTo("User not found"));
-    }
-
-    @Test
     public void testLoginSuccess() {
         String requestBody = "{ \"username\": \"" + adminUsername + "\", \"password\": \"" + adminPassword + "\" }";
 
@@ -39,6 +23,22 @@ public class AdminLoginTest extends BaseTest {
                 .log().ifError()
                 .body("status", equalTo("success"))
                 .body("message", equalTo("Admin Logged in Successfully!"));
+    }
+
+    @Test
+    public void testUsernameNotFound() {
+        // Request payload
+        String requestBody = "{ \"username\": \""+userNotFound+"\", \"password\": \""+adminPassword+"\" }";
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(requestBody)
+                .when()
+                .post(adminEndpoint)
+                .then()
+                .statusCode(404)
+                .log().ifError()
+                .body("error", equalTo("User not found"));
     }
 
     @Test
